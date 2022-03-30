@@ -17,6 +17,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3333
   await app.listen(port)
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`)
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/graphql`)
   Logger.log(`Running in ${config.get('NODE_ENV')} mode`)
   
 }
