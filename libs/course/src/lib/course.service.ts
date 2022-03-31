@@ -75,7 +75,7 @@ export class CourseService {
     return found
   }
 
-  public createCourse(input: CreateCourseInput) {
+  public createCourse(userId: string, input: CreateCourseInput) {
     return this.data.course.create({
       data: {
         ...input,
@@ -83,7 +83,7 @@ export class CourseService {
     })
   }
 
-  public updateCourse(id: string, input: UpdateCourseInput) {
+  public updateCourse(userID: string, id: string, input: UpdateCourseInput) {
     const course = this.course(id)
 
     return this.data.course.update({
@@ -94,12 +94,12 @@ export class CourseService {
     })
   }
 
-  public async deleteCourse(id: string) {
+  public async deleteCourse(userId: string, id: string) {
     const deleted = await this.data.course.delete({ where: { id } })
     return !!deleted
   }
 
-  public createLesson(courseId: string, input: CreateLessonInput) {
+  public createLesson(userId: string, courseId: string, input: CreateLessonInput) {
     const course = this.course(courseId)
     return this.data.lesson.create({
       data: {
@@ -109,14 +109,14 @@ export class CourseService {
     })
   }
 
-  public updateLesson(lessonId: string, input: UpdateLessonInput) {
+  public updateLesson(userId: string, lessonId: string, input: UpdateLessonInput) {
     return this.data.lesson.update({
       where: { id: lessonId },
       data: { ...input },
     })
   }
 
-  public async deleteLesson(lessonId: string) {
+  public async deleteLesson(userId: string, lessonId: string) {
     const deletedLesson = await this.data.lesson.delete({ where: { id: lessonId } })
     return !!deletedLesson
   }

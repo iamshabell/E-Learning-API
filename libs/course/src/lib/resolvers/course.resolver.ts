@@ -1,3 +1,5 @@
+import { CtxUser, GqlAuthGuard, User } from '@caawiye/auth'
+import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CourseService } from '../course.service'
 import { CreateCourseInput } from '../dto/course/create-course.input'
@@ -18,18 +20,23 @@ export class CourseResolver {
     return this.service.course(id)
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => Course, { nullable: true })
-  createCourse(@Args('input') input: CreateCourseInput) {
-    return this.service.createCourse(input)
+  createCourse(
+    @CtxUser() user: User,
+    @Args('input')
+    input: CreateCourseInput,
+  ) {
+    return this.service.createCourse(user.id, input)
   }
-
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => Course, { nullable: true })
-  updateCourse(@Args('id') id: string, @Args('input') input: UpdateCourseInput) {
-    return this.service.updateCourse(id, input)
+  updateCourse(@CtxUser() user: User, @Args('id') id: string, @Args('input') input: UpdateCourseInput) {
+    return this.service.updateCourse(user.id, id, input)
   }
-
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => Boolean, { nullable: true })
-  deleteCourse(@Args('id') id: string) {
-    return this.service.deleteCourse(id)
+  deleteCourse(@CtxUser() user: User, @Args('id') id: string) {
+    return this.service.deleteCourse(user.id, id)
   }
 }
