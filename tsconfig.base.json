@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@caawiye/auth": ["libs/auth/src/index.ts"],
       "@caawiye/core": ["libs/core/src/index.ts"],
       "@caawiye/course": ["libs/course/src/index.ts"],
       "@caawiye/data": ["libs/data/src/index.ts"]

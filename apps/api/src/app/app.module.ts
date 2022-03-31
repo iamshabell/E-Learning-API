@@ -1,3 +1,4 @@
+import { AuthModule } from '@caawiye/auth'
 import { CoreModule } from '@caawiye/core'
 import { CourseModule } from '@caawiye/course'
 import { DataModule } from '@caawiye/data'
@@ -7,7 +8,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
 @Module({
-  imports: [CoreModule, CourseModule, DataModule],
+  imports: [AuthModule, CoreModule, CourseModule, DataModule],
   controllers: [AppController],
   providers: [AppService],
 })
