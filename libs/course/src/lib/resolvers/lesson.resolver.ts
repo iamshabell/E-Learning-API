@@ -13,15 +13,11 @@ export class LessonResolver {
     return this.service.createLesson(courseId, input)
   }
   @Mutation(() => Lesson, { nullable: true })
-  updateLesson(
-    @Args('lessonId') lessonId: string,
-    @Args('courseId') courseId: string,
-    @Args('input') input: UpdateLessonInput,
-  ) {
-    return this.service.updateLesson(courseId, lessonId, input)
+  updateLesson(@Args('lessonId') lessonId: string, @Args('input') input: UpdateLessonInput) {
+    return this.service.updateLesson(lessonId, input)
   }
   @Mutation(() => Boolean, { nullable: true })
-  deleteLesson(@Args('lessonId') lessonId: string, @Args('courseId') courseId: string) {
-    return this.service.deleteLesson(courseId, lessonId)
+  deleteLesson(@Args('lessonId') lessonId: string) {
+    return this.service.deleteLesson(lessonId)
   }
 }

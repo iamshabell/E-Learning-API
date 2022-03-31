@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { DataService } from '@caawiye/data'
 import { CreateCourseInput } from './dto/course/create-course.input'
 import { UpdateCourseInput } from './dto/course/update-course.input'
 import { CreateLessonInput } from './dto/lesson/create-lesson.input'
@@ -59,92 +60,64 @@ export class CourseService {
     },
   ]
 
-  public courses(): Course[] {
-    return this.items
+  constructor(private readonly data: DataService) {}
+
+  public courses() {
+    return this.data.course.findMany({ include: { lessons: true } })
   }
 
-  public course(id: string): Course {
-    return this.items.find((item) => item.id === id)
+  public async course(id: string) {
+    const found = await this.data.course.findUnique({ where: { id }, include: { lessons: true } })
+
+    if (!found) {
+      throw new NotFoundException(`Course not found which its id is: ${id}`)
+    }
+    return found
   }
 
   public createCourse(input: CreateCourseInput) {
-    const newCourse: Course = {
-      id: Math.random().toString(),
-      ...input,
-    }
-    this.items.push(newCourse)
-    return newCourse
+    return this.data.course.create({
+      data: {
+        ...input,
+      },
+    })
   }
 
-  public updateCourse(id: string, input: UpdateCourseInput, lessons?: Lesson[]) {
+  public updateCourse(id: string, input: UpdateCourseInput) {
     const course = this.course(id)
-    if (!course) {
-      return 'Course not found'
-    }
-    const updatedCourse: Course = {
-      ...course,
-      ...input,
-      lessons: lessons ? lessons : course.lessons,
-    }
 
-    this.items = this.items.map((item) => (item.id === id ? updatedCourse : item))
-    return updatedCourse
+    return this.data.course.update({
+      where: { id },
+      data: {
+        ...input,
+      },
+    })
   }
 
-  public deleteCourse(id: string) {
-    const course = this.course(id)
-    if (!course) {
-      return false
-    }
-    this.items = this.items.filter((item) => item.id !== id)
-    return true
+  public async deleteCourse(id: string) {
+    const deleted = await this.data.course.delete({ where: { id } })
+    return !!deleted
   }
 
   public createLesson(courseId: string, input: CreateLessonInput) {
-    const newLesson: Lesson = {
-      id: Math.random().toString(),
-      ...input,
-    }
     const course = this.course(courseId)
-
-    this.updateCourse(courseId, {}, [...course.lessons, newLesson])
-
-    return newLesson
-  }
-
-  public updateLesson(courseId: string, lessonId: string, input: UpdateLessonInput) {
-    const course = this.course(courseId)
-
-    const lesson = course.lessons.find((item) => item.id === lessonId)
-
-    const updatedLesson: Lesson = {
-      ...lesson,
-      ...input,
-    }
-
-    course.lessons = course.lessons.map((item) => {
-      if (item.id === lessonId) {
-        return updatedLesson
-      }
-      return item
+    return this.data.lesson.create({
+      data: {
+        course: { connect: { id: courseId } },
+        ...input,
+      },
     })
-    return updatedLesson
   }
 
-  public deleteLesson(courseId: string, lessonId: string) {
-    const course = this.course(courseId)
-    if (!course) {
-      return false
-    }
+  public updateLesson(lessonId: string, input: UpdateLessonInput) {
+    return this.data.lesson.update({
+      where: { id: lessonId },
+      data: { ...input },
+    })
+  }
 
-    const lesson = course.lessons.find((item) => item.id === lessonId)
-
-    if (!lesson) {
-      return false
-    }
-
-    course.lessons = course.lessons.filter((item) => item.id !== lessonId)
-
-    return true
+  public async deleteLesson(lessonId: string) {
+    const deletedLesson = await this.data.lesson.delete({ where: { id: lessonId } })
+    return !!deletedLesson
   }
 }

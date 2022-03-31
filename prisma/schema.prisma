@@ -17,3 +17,20 @@ model User {
   password  String
   address   String?
 }
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  imageUrl    String?
+  lessons     Lesson[]
+}
+
+model Lesson {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  content     String?
+  course      Course? @relation(fields: [courseId], references: [id])
+  courseId    String?
+}
