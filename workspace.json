@@ -3,6 +3,7 @@
   "projects": {
     "api": "apps/api",
     "core": "libs/core",
-    "course": "libs/course"
+    "course": "libs/course",
+    "data": "libs/data"
   }
 }

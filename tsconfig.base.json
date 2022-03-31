@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@caawiye/core": ["libs/core/src/index.ts"],
-      "@caawiye/course": ["libs/course/src/index.ts"]
+      "@caawiye/course": ["libs/course/src/index.ts"],
+      "@caawiye/data": ["libs/data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
