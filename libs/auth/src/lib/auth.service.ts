@@ -1,13 +1,15 @@
 import { DataService } from '@caawiye/data'
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 import { AuthHelper } from './auth.helper'
 import { AuthLoginInput } from './dto/auth-login.input'
 import { AuthRegisterInput } from './dto/auth-register.input'
+import { JwtDto } from './dto/jwt.dto'
 import { UserToken } from './models/user-token'
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly data: DataService) {}
+  constructor(private readonly data: DataService, private readonly jwt: JwtService) {}
 
   public async login(input: AuthLoginInput): Promise<UserToken> {
     const found = await this.data.findUserByEmail(input.email)
@@ -41,6 +43,11 @@ export class AuthService {
   }
 
   private signToken(id: string) {
-    return 'token'
+    const payload: JwtDto = { userId: id }
+    return this.jwt.sign(payload)
+  }
+
+  public async validateUser(userId: string) {
+    return this.data.findUserById(userId)
   }
 }

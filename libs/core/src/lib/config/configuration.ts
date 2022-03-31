@@ -5,4 +5,5 @@ export const configuration = () => ({
     email: process.env.ADMIN_EMAIL,
     password: process.env.ADMIN_PASSWORD,
   },
+  jwtSecret: process.env.JWT_SECRET,
 })
