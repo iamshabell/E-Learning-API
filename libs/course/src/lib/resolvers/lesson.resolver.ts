@@ -6,6 +6,7 @@ import { CreateLessonInput } from '../dto/lesson/create-lesson.input'
 import { UpdateLessonInput } from '../dto/lesson/update-lesson.input'
 import { Lesson } from '../models/lesson'
 
+@UseGuards(GqlAuthGuard)
 @Resolver()
 export class LessonResolver {
   constructor(private readonly service: CourseService) {}

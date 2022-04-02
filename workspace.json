@@ -5,6 +5,7 @@
     "auth": "libs/auth",
     "core": "libs/core",
     "course": "libs/course",
-    "data": "libs/data"
+    "data": "libs/data",
+    "client": "apps/client"
   }
 }

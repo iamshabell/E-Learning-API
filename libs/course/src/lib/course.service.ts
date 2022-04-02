@@ -9,57 +9,6 @@ import { Lesson } from './models/lesson'
 
 @Injectable()
 export class CourseService {
-  items: Course[] = [
-    {
-      id: 'intro-to-angular',
-      title: 'The Complete Angular.js Developer Course',
-      lessons: [
-        {
-          id: 'intro-to-angular-lesson-1',
-          title: 'Intro to Angular.js',
-          content: 'Intro Angular.js Developer Course',
-        },
-        {
-          id: 'intro-to-angular-lesson-2',
-          title: 'Basics of Angular.js',
-          content: 'Basics Angular.js Developer Course',
-        },
-      ],
-    },
-    {
-      id: 'intro-to-graphql',
-      title: 'The Complete GraphQL Developer Course',
-      lessons: [
-        {
-          id: 'intro-to-graphql-lesson-1',
-          title: 'Intro to GraphQL',
-          content: 'Intro GraphQL Developer Course',
-        },
-        {
-          id: 'intro-to-graphql-lesson-2',
-          title: 'Basics of GraphQL',
-          content: 'Basics GraphQL Developer Course',
-        },
-      ],
-    },
-    {
-      id: 'intro-to-nest',
-      title: 'The Complete Nest.js Developer Course',
-      lessons: [
-        {
-          id: 'intro-to-nest-lesson-1',
-          title: 'Intro to Nest.js',
-          content: 'Intro Nest.js Developer Course',
-        },
-        {
-          id: 'intro-to-nest-lesson-2',
-          title: 'Basics of Nest.js',
-          content: 'Basics Nest.js Developer Course',
-        },
-      ],
-    },
-  ]
-
   constructor(private readonly data: DataService) {}
 
   public courses() {

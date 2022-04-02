@@ -17,7 +17,12 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
         "accessToken": "MDhkYzM0MTgtNWM1Yy00MTc1LWJkZGUtYTYwN2E4MjQzOTQzfHJlYWQtd3JpdGU="
       }
     }
@@ -30,5 +35,8 @@
       }
     ]
   },
-  "defaultProject": "api"
+  "defaultProject": "api",
+  "plugins": [
+    "@nxrocks/nx-flutter"
+  ]
 }
